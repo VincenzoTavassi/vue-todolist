@@ -45,7 +45,7 @@
             type="text"
             class="form-control"
             placeholder="Add new task"
-            aria-label="Recipient's username"
+            aria-label="Add task"
             aria-describedby="button-addon2"
             @keyUp.enter="addItem()"
           />
@@ -64,10 +64,10 @@
             <li
               v-for="(task, indice) of todoTasks"
               class="d-flex list-group-item"
-              style="cursor: pointer"
-              @click="task.done = !task.done; doneTasks.push(task); removeToDoItem(indice)"
             >
               <span
+                style="cursor: pointer"
+                @click="task.done = !task.done; doneTasks.push(task); removeToDoItem(indice)"
                 :class="task.done == true ? 'text-decoration-line-through' : ''"
                 >{{task.text}}</span
               >
@@ -87,10 +87,10 @@
             <li
               v-for="(task, indice) of doneTasks"
               class="d-flex list-group-item"
-              style="cursor: pointer"
-              @click="task.done = !task.done; todoTasks.push(task); removeDoneItem(indice)"
             >
               <span
+                style="cursor: pointer"
+                @click="task.done = !task.done; todoTasks.push(task); removeDoneItem(indice)"
                 :class="task.done == true ? 'text-decoration-line-through' : ''"
                 >{{task.text}}</span
               >
