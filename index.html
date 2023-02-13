@@ -36,6 +36,9 @@
   <body>
     <div id="root">
       <div class="container">
+        <div v-show="errore" class="alert alert-danger" role="alert">
+          Inserisci almeno 4 caratteri.
+        </div>
         <div class="input-group input-group-lg my-5">
           <input
             v-model="newTask"
@@ -55,20 +58,48 @@
             Add Task
           </button>
         </div>
+        <h1 class="text-center">Task da fare</h1>
         <div class="d-flex justify-content-center">
           <ol class="w-75 list-group list-group-numbered">
-            <li v-for="(task, indice) of tasks" class="d-flex list-group-item">
+            <li
+              v-for="(task, indice) of todoTasks"
+              class="d-flex list-group-item"
+              style="cursor: pointer"
+              @click="task.done = !task.done; doneTasks.push(task); removeToDoItem(indice)"
+            >
               <span
-                :class="tasks[indice].done == true ? 'text-decoration-line-through' : ''"
-                @click="tasks[indice].done = !tasks[indice].done"
-                >{{tasks[indice].text}}</span
+                :class="task.done == true ? 'text-decoration-line-through' : ''"
+                >{{task.text}}</span
               >
               <a
                 href="#"
-                :class="tasks[indice].done == true ? 'bg-primary' : 'bg-danger'"
+                :class="task.done == true ? 'bg-primary' : 'bg-danger'"
                 class="badge rounded-pill ms-auto text-decoration-none"
-                @click="removeItem(indice)"
-                >{{tasks[indice].done == true ? 'done' : 'x'}}</a
+                @click="removeToDoItem(indice)"
+                >{{todoTasks[indice].done == true ? 'done' : 'x'}}</a
+              >
+            </li>
+          </ol>
+        </div>
+        <h2 class="text-center">Task completati</h2>
+        <div class="d-flex justify-content-center">
+          <ol class="w-75 list-group list-group-numbered">
+            <li
+              v-for="(task, indice) of doneTasks"
+              class="d-flex list-group-item"
+              style="cursor: pointer"
+              @click="task.done = !task.done; todoTasks.push(task); removeDoneItem(indice)"
+            >
+              <span
+                :class="task.done == true ? 'text-decoration-line-through' : ''"
+                >{{task.text}}</span
+              >
+              <a
+                href="#"
+                :class="task.done == true ? 'bg-primary' : 'bg-danger'"
+                class="badge rounded-pill ms-auto text-decoration-none"
+                @click="removeDoneItem(indice)"
+                >{{task.done == true ? 'done' : 'x'}}</a
               >
             </li>
           </ol>

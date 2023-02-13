@@ -32,21 +32,62 @@ createApp({
           text: "Appuntamento con Maria",
           done: true,
         },
+        {
+          text: "Meeting con Frank",
+          done: true,
+        },
+        {
+          text: "Passeggiata nel bosco",
+          done: false,
+        },
+        {
+          text: "Acquisto regalo compleanno",
+          done: false,
+        },
       ],
       newTask: "",
+      doneTasks: [],
+      todoTasks: [],
+      errore: false,
     };
   },
+  computed: {},
   methods: {
-    removeItem(i) {
-      this.tasks.splice(i, 1);
+    removeToDoItem(i) {
+      this.todoTasks.splice(i, 1);
     },
+
+    removeDoneItem(i) {
+      this.doneTasks.splice(i, 1);
+    },
+
     addItem() {
-      const newItem = {
-        text: this.newTask,
-        done: false,
-      };
-      this.tasks.push(newItem);
-      this.newTask = "";
+      if (this.newTask.length >= 4) {
+        this.errore = false;
+        const newItem = {
+          text: this.newTask,
+          done: false,
+        };
+        this.todoTasks.push(newItem);
+        this.newTask = "";
+      } else {
+        this.errore = true;
+      }
     },
+
+    toDoNot() {
+      const taskCopy = [...this.tasks];
+      for (task of taskCopy) {
+        if (task.done) {
+          this.doneTasks.push(task);
+        } else {
+          this.todoTasks.push(task);
+        }
+      }
+    },
+  },
+
+  created() {
+    this.toDoNot();
   },
 }).mount("#root");
